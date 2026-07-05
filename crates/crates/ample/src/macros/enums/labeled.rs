@@ -1,0 +1,97 @@
+/// A macro that defines an error type and error handling for syscalls.
+///
+/// This macro generates:
+/// 1. An Error enum with the specified variants and their associated discriminant values
+/// 2. ErrorTrait implementation for the Error type with proper discriminant mapping
+/// 3. An discriminant module with standard Linux error constants
+/// 4. Into<isize> implementation for the Error type
+/// 5. A handle_result function that maps arch errors to syscall errors
+///
+/// # Arguments
+///
+/// * `$enum_identifier` - The name of the error enum (usually Error)
+/// * `$variant` - The variant name in the crate::result::Error enum (e.g., Open, Read, Write)
+/// * `$enum_label` - String slice with the syscall name
+/// * A list of error variants with their descriptions, discriminant values and Linux standard constant names
+///   [VariantName, discriminant_value, "description", "LINUX_CONSTANT"]
+///
+/// # Example
+///
+/// ```
+/// $enum_identifier:ident,
+/// $variant:ty,
+/// $enum_label:expr,
+/// [
+///     $(
+///         [
+///             $variant_discriminant:expr;
+///             $variant_identifier:ident;
+///             $variant_const_identifier:ident;
+///             $variant_acronym:expr;
+///             $variant_description:expr
+///         ]
+///     ),* $(,)?
+/// ]
+/// ```
+#[macro_export]
+#[rustfmt::skip]
+macro_rules! enum_labeled {
+    (
+        $(#[$($struct_doc:meta),*])*
+        $enum_vis:vis enum $enum_identifier:ident,
+        $enum_discriminant_type:ty,
+        $enum_label:expr,
+        [
+            $(
+                [
+                    $variant_discriminant:tt;
+                    $variant_identifier:ident;
+                    $($variant_const_identifier:ident),*;
+                    $variant_acronym:expr;
+                    $variant_description:expr
+                ]
+            ),* $(,)?
+        ]
+    ) => {
+
+        $crate::r#enum!(
+            $enum_discriminant_type;
+            $(#[$($struct_doc),*])*
+            $enum_vis enum $enum_identifier {
+                $(
+                    $variant_identifier = $variant_discriminant
+                ),*
+            }
+        );
+
+        pub mod constants {
+            $(
+                $(
+                    pub const $variant_const_identifier: $enum_discriminant_type = $variant_discriminant;
+                )*
+            )*
+        }
+
+        impl $crate::traits::enums::Labeled<crate::Origin> for $enum_identifier {
+            fn description(&self) -> &str {
+                match self {
+                    $(Self::$variant_identifier => $variant_description,)*
+                }
+            }
+
+            fn acronym(&self) -> &str {
+                match *self {
+                    $(Self::$variant_identifier => $variant_acronym,)*
+                }
+            }
+        }
+
+        impl core::fmt::Display for $enum_identifier {
+            fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {
+                use $crate::traits::enums::Labeled;
+                write!(f, "{}:{}",self.discriminant(), self.description())
+            }
+        }
+    };
+}
+pub use enum_labeled;
