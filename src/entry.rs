@@ -1,13 +1,13 @@
 #![no_std]
 #![no_main]
-#![allow(unused_variables)]
-#![allow(unused_imports)]
+// #![allow(unused_variables)]
+// #![allow(unused_imports)]
 #![allow(incomplete_features)]
-#![allow(unused_assignments)]
+// #![allow(unused_assignments)]
 #![feature(generic_const_exprs)]
-#![feature(generic_const_items)]
-#![feature(const_trait_impl)]
-#![feature(fundamental)]
+// #![feature(generic_const_items)]
+// #![feature(const_trait_impl)]
+// #![feature(fundamental)]
 
 use userspace;
 use userspace::info;
@@ -32,7 +32,7 @@ pub extern "C" fn entry(stack_pointer: crate::target::arch::PointerType) -> ! {
     stack.arguments.print();
 
     let arg0 = stack.arguments.get(0).unwrap();
-    let arg0_pointer = arg0.pointer;
+    let _arg0_pointer = arg0.pointer;
 
     if !arg0.pointer.0.is_null() {
         unsafe {
@@ -41,7 +41,7 @@ pub extern "C" fn entry(stack_pointer: crate::target::arch::PointerType) -> ! {
 
             userspace::info!("\n{:?}\n\n", self_path);
 
-            let self_fd = userspace::file::open(self_path);
+            let _self_fd = userspace::file::open(self_path);
 
             let (fd, stat, ptr) = userspace::file::load(self_path).unwrap();
 
