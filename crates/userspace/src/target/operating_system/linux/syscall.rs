@@ -11,6 +11,8 @@ syscall_modules!(
     [9;   mmap;     MMAP;     Syscall6;  "MMap"],
     [10;  mprotect; MPROTECT; Syscall3;  "MProtect"],
     [11;  munmap;   MUNMAP;   Syscall2;  "MUnMap"],
+    [41;  socket;   SOCKET;   Syscall3;  "Socket"],
+    [42;  connect;  CONNECT;  Syscall3;  "Connect"],
     [60;  exit;     EXIT;     Syscall1;  "Exit"],
     [257; openat;   OPENAT;   Syscall3;  "OpenAt"],
     [258; openat4;  OPENAT4;  Syscall4;  "OpenAt4"]

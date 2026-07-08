@@ -11,7 +11,9 @@ pub mod ok {
         [7; ERR_OPEN;     Open;     syscall::open::Ok;          "open";      "E_OPEN"],
         [8; ERR_READ;     Read;     syscall::read::Ok;          "read";      "E_READ"],
         [9; ERR_WRITE;    Write;    syscall::write::Ok;        "write";     "E_WRITE"],
-        [10; ERR_FSTAT;   FStat;    syscall::fstat::Ok;        "fstat";     "E_FSTAT"]
+        [10; ERR_FSTAT;   FStat;    syscall::fstat::Ok;        "fstat";     "E_FSTAT"],
+        [11; ERR_CONNECT; Connect;    syscall::connect::Ok;        "connect";     "E_CONNECT"],
+        [12; ERR_SOCKET;    Socket;   syscall::socket::Ok;        "socket"; "E_SOCKET"],
     ]);
 
     impl Ok {
@@ -33,7 +35,9 @@ pub mod error {
         [7; ERR_OPEN;       Open;     syscall::open::Error;          "open"; "E_OPEN"],
         [8; ERR_READ;       Read;     syscall::read::Error;          "read"; "E_READ"],
         [9; ERR_WRITE;      Write;    syscall::write::Error;        "write"; "E_WRITE"],
-        [10; ERR_FSTAT;     FStat;    syscall::fstat::Error;        "fstat"; "E_FSTAT"]
+        [10; ERR_FSTAT;     FStat;    syscall::fstat::Error;        "fstat"; "E_FSTAT"],
+        [11; ERR_CONNECT;   Connect;  syscall::connect::Error;        "connect"; "E_CONNECT"],
+        [12; ERR_SOCKET;    Socket;   syscall::socket::Error;        "socket"; "E_SOCKET"],
     ]);
 
     impl Error {
