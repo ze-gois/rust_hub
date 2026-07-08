@@ -1,7 +1,7 @@
 use crate::memory::heap::Allocator;
 use ample::traits::Allocatable;
+pub use core::alloc as core_alloc;
 use core::alloc::{GlobalAlloc, Layout};
-
 struct BlergAlloc;
 
 unsafe impl GlobalAlloc for BlergAlloc {

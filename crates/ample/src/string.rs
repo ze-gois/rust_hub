@@ -1,6 +1,7 @@
 pub mod terminate;
 pub use terminate::terminate;
-
+pub mod concatenate;
+pub use concatenate::concatenate;
 crate::r#struct!(
     #[derive(Debug)]
     pub struct String {

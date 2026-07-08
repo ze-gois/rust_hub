@@ -5,8 +5,8 @@ pub use super::socket::types::SocketAddress;
 hooking!(CONNECT);
 
 #[inline(always)]
-pub fn connect(fd: isize, sa: *const SocketAddress) -> crate::Result {
-    let arch_result = Arch::syscall3(NUMBER, fd as usize, sa as usize, sa as usize);
+pub fn connect(fd: isize, sa: *const SocketAddress, address_length: i32) -> crate::Result {
+    let arch_result = Arch::syscall3(NUMBER, fd as usize, sa as usize, address_length as usize);
     handle_result(arch_result)
 }
 

@@ -11,11 +11,14 @@ ample::r#struct!(
 #[macro_use]
 pub mod target;
 pub mod file;
+pub mod human;
 pub mod license;
 pub mod memory;
 pub mod panic;
 pub mod result;
 pub mod traits;
+
+pub extern crate alloc;
 
 pub use file::File;
 pub use result::{Error, Ok, Result};
