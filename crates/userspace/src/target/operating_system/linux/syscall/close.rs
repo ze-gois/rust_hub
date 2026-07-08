@@ -63,6 +63,6 @@ pub fn handle_result(result: crate::Result) -> crate::Result {
                 crate::target::os::Error::Syscall(
                 crate::target::os::syscall::Error::Close(
                 Error::Default(3),
-            ))))),
+            )))))
     }
 }

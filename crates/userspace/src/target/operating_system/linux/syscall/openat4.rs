@@ -21,24 +21,31 @@ pub fn openat4(
     handle_result(syscall_result)
 }
 
+#[rustfmt::skip]
 pub fn handle_result(result: crate::Result) -> crate::Result {
     // Err(crate::Error::Default(1))
     match result {
-        crate::Result::Ok(crate::Ok::Target(crate::target::Ok::Arch(
+        crate::Result::Ok(
+            crate::Ok::Target(
+            crate::target::Ok::Arch(
             crate::target::arch::Ok::X86_64Syscall(
-                crate::target::arch::syscall::Ok::X86_64Syscall4(
-                    crate::target::arch::syscall::syscall4::Ok::Default(m),
-                ),
-            ),
-        ))) => core::result::Result::Ok(crate::Ok::Target(crate::target::Ok::Os(
-            crate::target::os::Ok::Syscall(crate::target::os::syscall::Ok::Open(
+            crate::target::arch::syscall::Ok::X86_64Syscall4(
+            crate::target::arch::syscall::syscall4::Ok::Default(m),
+        ))))) =>
+            core::result::Result::Ok(
+                crate::Ok::Target(
+                crate::target::Ok::Os(
+                crate::target::os::Ok::Syscall(
+                crate::target::os::syscall::Ok::Open(
                 crate::target::os::syscall::open::Ok::OPENAT4(m),
-            )),
-        ))),
-        _ => core::result::Result::Err(crate::Error::Target(crate::target::Error::Os(
-            crate::target::os::Error::Syscall(crate::target::os::syscall::Error::Open(
+            ))))),
+        _ =>
+            core::result::Result::Err(
+                crate::Error::Target(
+                crate::target::Error::Os(
+                crate::target::os::Error::Syscall(
+                crate::target::os::syscall::Error::Open(
                 Error::Default(3),
-            )),
-        ))),
+            ))))),
     }
 }

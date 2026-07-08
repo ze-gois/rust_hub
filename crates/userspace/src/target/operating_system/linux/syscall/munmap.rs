@@ -38,24 +38,31 @@ pub use ok::Ok;
 
 pub type Result = core::result::Result<Ok, Error>;
 
+#[rustfmt::skip]
 pub fn handle_result(result: crate::Result) -> crate::Result {
     // Err(crate::Error::Default(1))
     match result {
-        crate::Result::Ok(crate::Ok::Target(crate::target::Ok::Arch(
+        crate::Result::Ok(
+            crate::Ok::Target(
+            crate::target::Ok::Arch(
             crate::target::arch::Ok::X86_64Syscall(
-                crate::target::arch::syscall::Ok::X86_64Syscall2(
-                    crate::target::arch::syscall::syscall2::Ok::Default(m),
-                ),
-            ),
-        ))) => core::result::Result::Ok(crate::Ok::Target(crate::target::Ok::Os(
-            crate::target::os::Ok::Syscall(crate::target::os::syscall::Ok::MUnmap(
+            crate::target::arch::syscall::Ok::X86_64Syscall2(
+            crate::target::arch::syscall::syscall2::Ok::Default(m),
+        ))))) =>
+            core::result::Result::Ok(
+                crate::Ok::Target(
+                crate::target::Ok::Os(
+                crate::target::os::Ok::Syscall(
+                crate::target::os::syscall::Ok::MUnmap(
                 crate::target::os::syscall::munmap::Ok::Default(m),
-            )),
-        ))),
-        _ => core::result::Result::Err(crate::Error::Target(crate::target::Error::Os(
-            crate::target::os::Error::Syscall(crate::target::os::syscall::Error::MUnmap(
+            ))))),
+        _ =>
+            core::result::Result::Err(
+                crate::Error::Target(
+                crate::target::Error::Os(
+                crate::target::os::Error::Syscall(
+                crate::target::os::syscall::Error::MUnmap(
                 Error::Default(3),
-            )),
-        ))),
+            ))))),
     }
 }
