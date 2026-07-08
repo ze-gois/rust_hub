@@ -1,12 +1,17 @@
 use crate::target::arch::{Arch, traits::Callable};
 
-pub use super::socket::types::SocketAddress;
+pub use super::socket::types::{SocketAddress, SocketAddressLike};
 
 hooking!(CONNECT);
 
 #[inline(always)]
-pub fn connect(fd: isize, sa: *const SocketAddress, address_length: i32) -> crate::Result {
-    let arch_result = Arch::syscall3(NUMBER, fd as usize, sa as usize, address_length as usize);
+pub fn connect<A: SocketAddressLike>(fd: isize, address: &A, address_length: i32) -> crate::Result {
+    let arch_result = Arch::syscall3(
+        NUMBER,
+        fd as usize,
+        address.as_sockaddr() as usize,
+        address_length as usize,
+    );
     handle_result(arch_result)
 }
 
@@ -47,8 +52,8 @@ pub fn handle_result(result: crate::Result) -> crate::Result {
             crate::Ok::Target(
             crate::target::Ok::Arch(
             crate::target::arch::Ok::X86_64Syscall(
-            crate::target::arch::syscall::Ok::X86_64Syscall2(
-            crate::target::arch::syscall::syscall2::Ok::Default(m),
+            crate::target::arch::syscall::Ok::X86_64Syscall3(
+            crate::target::arch::syscall::syscall3::Ok::Default(m),
         ))))) =>
             core::result::Result::Ok(
                 crate::Ok::Target(

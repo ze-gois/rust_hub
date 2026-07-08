@@ -47,8 +47,8 @@ pub fn handle_result(result: crate::Result) -> crate::Result {
             crate::Ok::Target(
             crate::target::Ok::Arch(
             crate::target::arch::Ok::X86_64Syscall(
-            crate::target::arch::syscall::Ok::X86_64Syscall2(
-            crate::target::arch::syscall::syscall2::Ok::Default(m),
+            crate::target::arch::syscall::Ok::X86_64Syscall3(
+            crate::target::arch::syscall::syscall3::Ok::Default(m),
         ))))) =>
             core::result::Result::Ok(
                 crate::Ok::Target(
